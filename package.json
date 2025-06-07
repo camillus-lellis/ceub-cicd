@@ -1,0 +1,23 @@
+{
+  "name": "cicd",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camillus-lellis/ceub-cicd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/camillus-lellis/ceub-cicd/issues"
+  },
+  "homepage": "https://github.com/camillus-lellis/ceub-cicd#readme",
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
