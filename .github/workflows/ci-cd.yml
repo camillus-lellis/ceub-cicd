@@ -15,7 +15,7 @@ jobs:
           node-version: '18'
       - name: Instala dependências
         run: npm install
-      - name: Corrige permissões dos binários Jest
-        run: chmod +x ./node_modules/.bin/jest
+      - name: Reinstala Jest (corrige permissões no Linux)
+        run: npm install --force --save-dev jest
       - name: Roda os testes
-        run: npm test
+        run: npx jest
