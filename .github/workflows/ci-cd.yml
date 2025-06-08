@@ -8,14 +8,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - name: Instala dependências
-        run: npm install
-      - name: Reinstala Jest (corrige permissões no Linux)
-        run: npm install --force --save-dev jest
-      - name: Roda os testes
-        run: node ./node_modules/jest/bin/jest.js
+  - uses: actions/checkout@v4
+  - name: Setup Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: '18'
+  - name: Remove package-lock.json e node_modules
+    run: |
+      rm -rf node_modules
+      rm -f package-lock.json
+  - name: Instala dependências limpas direto no Linux
+    run: npm install --no-package-lock
+  - name: Instala Jest no Linux (garante permissão correta)
+    run: npm install --save-dev jest
+  - name: Roda os testes via Node
+    run: node ./node_modules/jest/bin/jest.js
