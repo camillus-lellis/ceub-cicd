@@ -18,4 +18,4 @@ jobs:
       - name: Reinstala Jest (corrige permissões no Linux)
         run: npm install --force --save-dev jest
       - name: Roda os testes
-        run: npx jest
+        run: node ./node_modules/jest/bin/jest.js
