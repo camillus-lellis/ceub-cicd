@@ -1,29 +1,37 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  test:
+  test-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Remove package-lock.json e node_modules
-        run: |
-          rm -rf node_modules
-          rm -f package-lock.json
-      - name: Instala dependências limpas direto no Linux
-        run: npm install --no-package-lock
-      - name: Instala Jest no Linux (garante permissão correta)
-        run: npm install --save-dev jest
-      - name: Lista arquivos e permissões do .bin
-        run: ls -l ./node_modules/.bin
-      - name: Testa Jest manual pelo shell
-        run: ./node_modules/.bin/jest --version
-      - name: Roda os testes via Node
-        run: node ./node_modules/jest/bin/jest.js
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with Jest
+        run: npm test
+
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
+          exclude_assets: |
+            **/*.test.js
+            **/package*.json
+            **/.github
+            **/node_modules
